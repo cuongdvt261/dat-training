@@ -1,4 +1,4 @@
-package com.example.restfulapi.dto;
+package com.example.restfulapi.models;
 
 public class NameInput {
     private String firstName;
