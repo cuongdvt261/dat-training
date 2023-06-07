@@ -2,7 +2,7 @@ package com.example.restfulapi.api;
 
 import org.apache.commons.lang3.StringUtils;
 
-public class HelperName {
+public class NameHelper {
     public static String formatName(String firstName, String midName, String lastName) {
         return String.join(" ", StringUtils.capitalize(lastName), StringUtils.capitalize(midName), StringUtils.capitalize(firstName));
     }
