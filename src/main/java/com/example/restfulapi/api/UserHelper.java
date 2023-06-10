@@ -14,6 +14,8 @@ import java.net.URISyntaxException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
 
 public class UserHelper {
     private static final String API_KEY = "133e7297b4c9feffbb043a19b436ba57";
@@ -70,6 +72,7 @@ public class UserHelper {
         }
         return region;
     }
+
     public static File createTxtFile(String name, int age, String email, String phoneRegion, String address) {
         try {
             File txtFile = new File("account_info.txt");
