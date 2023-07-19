@@ -16,8 +16,8 @@ jobs:
                   trello-api-key: ${{ secrets.TRELLO_API_KEY }} # https://trello.com/app-key
                   trello-auth-token: ${{ secrets.TRELLO_AUTH_TOKEN }} # https://trello.com/app-key then click generate a token
                   trello-organization-name: remato # Your organization name to avoid assigning cards to outside members, edit your workspace details and look for the short name
-                  trello-board-id: jyNVxgTA # Trello board ID where to move the cards
-                  trello-list-id-pr-draft: 64b80ae8b91525ccc27ef509 # Trello list ID for draft pull request (useful when you want to move the card back to In progress when ready PR is converted to draft)
-                  trello-list-id-pr-open: 64b7f64cf32bee954cb4c52c # Trello list ID for open pull request
-                  trello-list-id-pr-closed: 64b7f64c8379ca80587626da # Trello list ID for closed pull request
+                  trello-board-id: 'jyNVxgTA' # Trello board ID where to move the cards
+                  trello-list-id-pr-draft: '64b80ae8b91525ccc27ef509' # Trello list ID for draft pull request (useful when you want to move the card back to In progress when ready PR is converted to draft)
+                  trello-list-id-pr-open: '64b7f64cf32bee954cb4c52c' # Trello list ID for open pull request
+                  trello-list-id-pr-closed: '64b7f64c8379ca80587626da' # Trello list ID for closed pull request
                   trello-conflicting-labels: 'feature;bug;chore' # When a card has one of these labels then branch category label is not assigned
