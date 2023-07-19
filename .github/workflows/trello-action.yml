@@ -1,0 +1,23 @@
+name: Trello integration
+on:
+    pull_request:
+        types: [opened, edited, closed, reopened, ready_for_review, converted_to_draft]
+    issue_comment:
+        types: [created, edited]
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: rematocorp/trello-integration-action@v6.4.1
+              with:
+                  github-token: ${{ secrets.GITHUB_TOKEN }}
+                  github-require-keyword-prefix: false # When true match only URLs prefixed with “Closes” etc just like https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue#linking-a-pull-request-to-an-issue-using-a-keyword
+                  github-require-trello-card: false # Throw an error if no Trello cards can be found in the PR description
+                  trello-api-key: ${{ secrets.TRELLO_API_KEY }} # https://trello.com/app-key
+                  trello-auth-token: ${{ secrets.TRELLO_AUTH_TOKEN }} # https://trello.com/app-key then click generate a token
+                  trello-organization-name: remato # Your organization name to avoid assigning cards to outside members, edit your workspace details and look for the short name
+                  trello-board-id: xxx # Trello board ID where to move the cards
+                  trello-list-id-pr-draft: xxx # Trello list ID for draft pull request (useful when you want to move the card back to In progress when ready PR is converted to draft)
+                  trello-list-id-pr-open: xxx # Trello list ID for open pull request
+                  trello-list-id-pr-closed: xxx # Trello list ID for closed pull request
+                  trello-conflicting-labels: 'feature;bug;chore' # When a card has one of these labels then branch category label is not assigned
