@@ -1,33 +1,38 @@
 package com.example.restfulapi.api;
 
-import java.io.File;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.restfulapi.models.UserInput;
-
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
-
+import com.example.restfulapi.helper.EmailSenderSevice;
+import com.example.restfulapi.helper.UserHelper;
+import com.example.restfulapi.helper.UserService;
 import com.example.restfulapi.models.UserInfo;
 
-@Controller
+@RestController
+@RequestMapping("/user")
 public class APIUser {
     @Autowired
-    public JavaMailSender sendMail;
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
-    @ResponseBody
+    private EmailSenderSevice emailSenderSevice;
+
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/mail")
     public ResponseEntity<UserInfo> createUser(@RequestBody UserInput userInput) {
         try {
             String name = UserHelper.normalizeName(userInput.getName());
@@ -37,24 +42,34 @@ public class APIUser {
             String address = userInput.getAddress();
             UserInfo userInfo = new UserInfo(name, age, email, phoneRegion, address);
             UserHelper.createTxtFile(name, age, email, phoneRegion, address);
+            ClassPathResource resource = new ClassPathResource("account_info.txt");
+            String fileUrl = resource.getURL().toString();
+            emailSenderSevice.sendMailWithAttachment(email, "This is email body", "This is subject", fileUrl);
             return ResponseEntity.ok(userInfo);
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    @RequestMapping("/sendAttachmentEmail")
-    public void sendAttachmentEmail() {
-        try {
-            MimeMessage message = sendMail.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-            helper.setTo("maithanhdat102@gmail.com");
-            helper.setSubject("Test email with attachments");
-            FileSystemResource file = new FileSystemResource(new File("/Users/maidat/Desktop/restful-api/account_info.txt"));
-            helper.addAttachment("account_info.txt", file);
-            sendMail.send(message);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
+
+    @PostMapping("/add")
+    public UserInput addUser(@RequestBody UserInput user) {
+        return userService.addUserInput(user);
+    }
+
+    @PutMapping("update")
+    public UserInput updateUser(@RequestParam("id") long id, @RequestBody UserInput user) {
+        return userService.updateUserInput(id, user);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public boolean deleteUser(@PathVariable("id") long id) {
+        return userService.deleteUserInput(id);
+    }
+
+    @GetMapping("/list")
+    public List<UserInput> getAllUsers() {
+        return userService.getAllUserInput();
     }
 }
+    
