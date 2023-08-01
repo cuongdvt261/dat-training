@@ -1,4 +1,4 @@
-package com.example.restfulapi.api;
+package com.example.restfulapi.helper;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -14,8 +14,8 @@ import java.net.URISyntaxException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 public class UserHelper {
     private static final String API_KEY = "133e7297b4c9feffbb043a19b436ba57";
@@ -73,25 +73,47 @@ public class UserHelper {
         return region;
     }
 
+    // public static File createTxtFile(String name, int age, String email, String phoneRegion, String address) {
+    //     try {
+    //         File txtFile = new File("account_info.txt");
+
+    //         FileWriter fileWriter = new FileWriter(txtFile);
+
+    //         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+
+    //         bufferedWriter.write("Tên: " + name);
+    //         bufferedWriter.newLine(); 
+    //         bufferedWriter.write("Tuổi: " + age);
+    //         bufferedWriter.newLine();
+    //         bufferedWriter.write("Địa chỉ: " + address);
+    //         bufferedWriter.newLine();
+    //         bufferedWriter.write("Email: " + email);
+    //         bufferedWriter.newLine();
+    //         bufferedWriter.write("Số điện thoại: " + phoneRegion);
+
+    //         bufferedWriter.close();
+
+    //         return txtFile;
+    //     } catch (IOException e) {
+    //         e.printStackTrace();
+    //         return null;
+    //     }
+    // }
+    
     public static File createTxtFile(String name, int age, String email, String phoneRegion, String address) {
         try {
-            File txtFile = new File("account_info.txt");
+            // Use Spring's Resource to get the file path
+            Resource resource = new ClassPathResource("account_info.txt");
+            File txtFile = resource.getFile();
 
             FileWriter fileWriter = new FileWriter(txtFile);
+            fileWriter.write("Tên: " + name + "\n");
+            fileWriter.write("Tuổi: " + age + "\n");
+            fileWriter.write("Địa chỉ: " + address + "\n");
+            fileWriter.write("Email: " + email + "\n");
+            fileWriter.write("Số điện thoại: " + phoneRegion);
 
-            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-
-            bufferedWriter.write("Tên: " + name);
-            bufferedWriter.newLine(); 
-            bufferedWriter.write("Tuổi: " + age);
-            bufferedWriter.newLine();
-            bufferedWriter.write("Địa chỉ: " + address);
-            bufferedWriter.newLine();
-            bufferedWriter.write("Email: " + email);
-            bufferedWriter.newLine();
-            bufferedWriter.write("Số điện thoại: " + phoneRegion);
-
-            bufferedWriter.close();
+            fileWriter.close();
 
             return txtFile;
         } catch (IOException e) {
@@ -99,6 +121,5 @@ public class UserHelper {
             return null;
         }
     }
-
 
 }
