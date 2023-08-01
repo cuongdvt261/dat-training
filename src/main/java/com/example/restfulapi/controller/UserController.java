@@ -1,4 +1,4 @@
-package com.example.restfulapi.api;
+package com.example.restfulapi.controller;
 
 
 import java.util.List;
@@ -17,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.restfulapi.models.UserInput;
-import com.example.restfulapi.helper.EmailSenderSevice;
+import com.example.restfulapi.models.Users;
+import com.example.restfulapi.service.EmailSenderSevice;
+import com.example.restfulapi.service.UserService;
 import com.example.restfulapi.helper.UserHelper;
-import com.example.restfulapi.helper.UserService;
 import com.example.restfulapi.models.UserInfo;
 
 @RestController
 @RequestMapping("/user")
-public class APIUser {
+public class UserController {
     @Autowired
     private EmailSenderSevice emailSenderSevice;
 
@@ -33,7 +33,7 @@ public class APIUser {
     private UserService userService;
 
     @PostMapping("/mail")
-    public ResponseEntity<UserInfo> createUser(@RequestBody UserInput userInput) {
+    public ResponseEntity<UserInfo> createUser(@RequestBody Users userInput) {
         try {
             String name = UserHelper.normalizeName(userInput.getName());
             int age = UserHelper.calculateAge(userInput.getDateOfBirth());
@@ -53,12 +53,12 @@ public class APIUser {
     }
 
     @PostMapping("/add")
-    public UserInput addUser(@RequestBody UserInput user) {
+    public Users addUser(@RequestBody Users user) {
         return userService.addUserInput(user);
     }
 
     @PutMapping("update")
-    public UserInput updateUser(@RequestParam("id") long id, @RequestBody UserInput user) {
+    public Users updateUser(@RequestParam("id") long id, @RequestBody Users user) {
         return userService.updateUserInput(id, user);
     }
 
@@ -68,7 +68,7 @@ public class APIUser {
     }
 
     @GetMapping("/list")
-    public List<UserInput> getAllUsers() {
+    public List<Users> getAllUsers() {
         return userService.getAllUserInput();
     }
 }

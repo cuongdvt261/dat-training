@@ -9,11 +9,10 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class UserInput {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    private long id;
+    private int id;
 
     @Column(name = "name")
     private String name;
@@ -30,7 +29,7 @@ public class UserInput {
     @Column(name = "phoneNumber")
     private String phoneNumber;
 
-    public UserInput(long id, String name, String dateOfBirth, String address, String email, String phoneNumber) {
+    public Users(int id, String name, String dateOfBirth, String address, String email, String phoneNumber) {
         this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
@@ -43,7 +42,7 @@ public class UserInput {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
