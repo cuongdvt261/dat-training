@@ -1,4 +1,4 @@
-package com.example.restfulapi.api;
+package com.example.restfulapi.helper;
 
 import org.apache.commons.lang3.StringUtils;
 

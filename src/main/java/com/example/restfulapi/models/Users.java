@@ -1,18 +1,49 @@
 package com.example.restfulapi.models;
 
-public class UserInput {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "users")
+public class Users {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "dateOfBirth")
     private String dateOfBirth;
+
+    @Column(name = "address")
     private String address;
+
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "phoneNumber")
     private String phoneNumber;
 
-    public UserInput(String name, String dateOfBirth, String address, String email, String phoneNumber) {
+    public Users(int id, String name, String dateOfBirth, String address, String email, String phoneNumber) {
+        this.id = id;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.email = email;
         this.phoneNumber = phoneNumber;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
