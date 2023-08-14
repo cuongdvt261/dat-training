@@ -1,0 +1,7 @@
+package com.example.restfulapi.models;
+
+public enum ERole {
+    ROLE_USER,
+    ROLE_MODERATOR,
+    ROLE_ADMIN
+}

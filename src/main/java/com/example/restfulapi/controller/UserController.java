@@ -24,6 +24,7 @@ import com.example.restfulapi.helper.UserHelper;
 import com.example.restfulapi.models.UserInfo;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
     @Autowired
     private EmailSenderSevice emailSenderSevice;
