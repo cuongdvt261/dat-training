@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.restfulapi.models.Users;
-import com.example.restfulapi.repository.UserRepository;
+import com.example.restfulapi.repository.UsersRepository;
 
 @Service
 public class UserService {
     @Autowired
-    private UserRepository userRepository;
+    private UsersRepository userRepository;
 
     public Users addUserInput(Users userInput){
         if(userInput != null) {

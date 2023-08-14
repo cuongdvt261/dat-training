@@ -32,6 +32,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/test")
+    public String test() {
+        return "Success";
+    }
+
     @PostMapping("/mail")
     public ResponseEntity<UserInfo> createUser(@RequestBody Users userInput) {
         try {
